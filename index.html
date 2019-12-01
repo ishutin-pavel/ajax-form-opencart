@@ -1,0 +1,61 @@
+<a href="#" class="btn btn-default btn-lg right-block__btn-link" data-toggle="modal" data-target="#callBackPopup">Обратный звонок</a>
+
+<div id="callBackPopup" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="mySmallModalLabel">Обратный звонок</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="f1" class="form ajax_form" action="javascript();">
+          <div class="form__item">
+            <input type="text" name="name" placeholder="Имя">
+          </div>
+          <div class="form__item">
+            <input type="tel" name="phone" placeholder="Телефон*">
+          </div>
+          <div class="message"></div>
+          <div class="form__item">
+            <input type="submit" class="btn btn-default btn-lg" value="Отправить заявку">
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+jQuery("#f1").submit(function() {
+  var form = jQuery(this);
+  var name = jQuery(this).find('input[name="phone"]');
+  var phone = jQuery(this).find('input[name="name"]');
+  var message = jQuery(this).find('.message');
+  if ( phone.val() == "") {
+    message.fadeIn(300).addClass('alert-danger').text('Введите Ваш телефон');
+    phone.css('border', '1px solid red').focus();
+  } else {
+    phone.css('border', '1px solid gray');
+  //yaCounter46416018.reachGoal('ORDER'); // изменить номер счётчика иначе ошибка !!!
+    jQuery.ajax({
+      type: "POST",
+      url: "index.php?route=common/footer/send_form",
+      data: form.serialize(),
+      dataType: 'json',
+      success: function(json) {
+        if(json['error']){
+          message.html(json['error']);
+        }
+        if(json['success']){
+          message.fadeIn(300).removeClass('alert-danger').addClass('alert-success').text('Сообщение успешно отправлено');
+        }
+      }
+    });
+  }//if
+  return false;
+});
+//--></script>
