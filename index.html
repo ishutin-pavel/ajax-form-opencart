@@ -32,8 +32,7 @@
 <script type="text/javascript"><!--
 jQuery("#f1").submit(function() {
   var form = jQuery(this);
-  var name = jQuery(this).find('input[name="phone"]');
-  var phone = jQuery(this).find('input[name="name"]');
+  var phone = jQuery(this).find('input[name="phone"]');
   var message = jQuery(this).find('.message');
   if ( phone.val() == "") {
     message.fadeIn(300).addClass('alert-danger').text('Введите Ваш телефон');
